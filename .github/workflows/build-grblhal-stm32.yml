@@ -40,12 +40,12 @@ jobs:
         run: |
           echo "=== platformio.ini env sections ==="
           python - <<'PY'
-import configparser,sys
-cfg=configparser.ConfigParser()
-cfg.read('platformio.ini')
-envs=[s for s in cfg.sections() if s.startswith('env:')]
-if envs:
-    print('\\n'.join(envs))
+          import configparser,sys
+          cfg=configparser.ConfigParser()
+          cfg.read('platformio.ini')
+         envs=[s for s in cfg.sections() if s.startswith('env:')]
+    if envs:
+   print('\\n'.join(envs))
 else:
     print('No env:* sections found in platformio.ini')
 PY__
