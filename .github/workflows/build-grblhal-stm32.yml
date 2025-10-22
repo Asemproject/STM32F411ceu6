@@ -18,6 +18,11 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      # ⬇️ Tambahkan blok ini
+      - name: Init git submodules (if any)
+        run: git submodule update --init --recursive
+      # ⬆️ Tambahkan blok ini
+
       - name: Set up Python 3.11
         uses: actions/setup-python@v5
         with:
@@ -41,17 +46,6 @@ jobs:
         run: |
           echo "=== platformio.ini env sections ==="
           python -c "import configparser,sys;cfg=configparser.ConfigParser();cfg.read('platformio.ini');envs=[s for s in cfg.sections() if s.startswith('env:')];print('\\n'.join(envs) if envs else 'No env:* sections found in platformio.ini')"
-
-      # Optional: copy your custom driver file into repo before build
-      # Uncomment / adapt paths if you want Actions to copy a local file into driver folder.
-      #- name: Copy custom driver (optional)
-      #  run: |
-      #    if [ -f custom/Devtronic_CNC_Controller_map.h ]; then
-      #      echo "Copying custom driver"
-      #      cp custom/Devtronic_CNC_Controller_map.h <PATH/TO/DRIVER>/Devtronic_CNC_Controller_map.h
-      #    else
-      #      echo "No custom driver found, skipping copy"
-      #    fi
 
       - name: Create build_logs dir
         run: mkdir -p build_logs
